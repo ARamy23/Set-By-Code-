@@ -7,21 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F60335620C948CD000C348E /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F60335520C948CD000C348E /* SetViewController.swift */; };
 		5FD3C68620C5457600D7531B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C68520C5457600D7531B /* AppDelegate.swift */; };
-		5FD3C68820C5457600D7531B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C68720C5457600D7531B /* ViewController.swift */; };
 		5FD3C68B20C5457600D7531B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD3C68920C5457600D7531B /* Main.storyboard */; };
 		5FD3C68D20C5457900D7531B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FD3C68C20C5457900D7531B /* Assets.xcassets */; };
 		5FD3C69020C5457900D7531B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FD3C68E20C5457900D7531B /* LaunchScreen.storyboard */; };
+		5FD3C69920C545A000D7531B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C69820C545A000D7531B /* Card.swift */; };
+		5FD3C69B20C54A6800D7531B /* SetBrain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C69A20C54A6800D7531B /* SetBrain.swift */; };
+		5FD3C6BC20C5738300D7531B /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C6BB20C5738300D7531B /* Grid.swift */; };
+		5FD3C6BE20C576C200D7531B /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FD3C6BD20C576C200D7531B /* SetCardView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5F60335520C948CD000C348E /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
 		5FD3C68220C5457600D7531B /* Set (By Code).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Set (By Code).app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FD3C68520C5457600D7531B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5FD3C68720C5457600D7531B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		5FD3C68A20C5457600D7531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		5FD3C68C20C5457900D7531B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5FD3C68F20C5457900D7531B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5FD3C69120C5457900D7531B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5FD3C69820C545A000D7531B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		5FD3C69A20C54A6800D7531B /* SetBrain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetBrain.swift; sourceTree = "<group>"; };
+		5FD3C6BB20C5738300D7531B /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		5FD3C6BD20C576C200D7531B /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +62,34 @@
 		5FD3C68420C5457600D7531B /* Set (By Code) */ = {
 			isa = PBXGroup;
 			children = (
+				5FD3C69720C5458400D7531B /* Model  */,
+				5FD3C6BA20C5643B00D7531B /* View */,
 				5FD3C68520C5457600D7531B /* AppDelegate.swift */,
-				5FD3C68720C5457600D7531B /* ViewController.swift */,
+				5F60335520C948CD000C348E /* SetViewController.swift */,
 				5FD3C68920C5457600D7531B /* Main.storyboard */,
 				5FD3C68C20C5457900D7531B /* Assets.xcassets */,
 				5FD3C68E20C5457900D7531B /* LaunchScreen.storyboard */,
 				5FD3C69120C5457900D7531B /* Info.plist */,
 			);
 			path = "Set (By Code)";
+			sourceTree = "<group>";
+		};
+		5FD3C69720C5458400D7531B /* Model  */ = {
+			isa = PBXGroup;
+			children = (
+				5FD3C69820C545A000D7531B /* Card.swift */,
+				5FD3C69A20C54A6800D7531B /* SetBrain.swift */,
+			);
+			path = "Model ";
+			sourceTree = "<group>";
+		};
+		5FD3C6BA20C5643B00D7531B /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5FD3C6BB20C5738300D7531B /* Grid.swift */,
+				5FD3C6BD20C576C200D7531B /* SetCardView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,7 +163,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5FD3C68820C5457600D7531B /* ViewController.swift in Sources */,
+				5FD3C6BE20C576C200D7531B /* SetCardView.swift in Sources */,
+				5F60335620C948CD000C348E /* SetViewController.swift in Sources */,
+				5FD3C69B20C54A6800D7531B /* SetBrain.swift in Sources */,
+				5FD3C69920C545A000D7531B /* Card.swift in Sources */,
+				5FD3C6BC20C5738300D7531B /* Grid.swift in Sources */,
 				5FD3C68620C5457600D7531B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

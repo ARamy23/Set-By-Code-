@@ -81,12 +81,11 @@ class SetCardView: UIView {
         UIColor.white.setFill()
         
         // If card is selected, draw a highlight color around it
+        cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.01
         if isSelected {
-            cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.1
             #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).setStroke()
         }
         else {
-            cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.01
             UIColor.lightGray.setStroke()
         }
         

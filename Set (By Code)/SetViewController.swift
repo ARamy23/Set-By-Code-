@@ -74,7 +74,7 @@ class SetViewController: UIViewController {
         
         updateBoardView()
         
-        view.setNeedsDisplay()
+//        view.setNeedsDisplay()
     }
     
     private func updateScoreLabel()
@@ -215,41 +215,35 @@ class SetViewController: UIViewController {
         
         // Toggle card selection
         cardView.isSelected = !cardView.isSelected
-        if cardView.isSelected
-        {
-            gameEngine.selectCard(at: cardViews.index(of: cardView)!)
-            cardView.cardState = .selected
-            cardView.setNeedsLayout()
-        } else
-        {
-            cardView.cardState = .regular
-            cardView.setNeedsDisplay()
-        }
         
+        gameEngine.selectCard(at: cardViews.index(of: cardView)!)
         // Process the board
-        processBoardView()
+        processBoard()
     }
     
-    private func processBoardView()
-    {
-        cleanupView()
-        if selectedCards.count == 3
-        {
+    private func processBoard() {
+        
+        // Cleanup the board (i.e. remove any matched cards or de-highlight unmatched ones)
+//        cleanupView()
+        
+        // If there are three selected cards on the board, see if they match or not
+        if selectedCards.count == 3 {
+            
+            // Check if selected cards are a set
             let isSet = gameEngine.isSetValid(cards: selectedCards)
-
-            if isSet
-            {
+            
+            // Match!
+            if isSet {
                 match(selectedCards)
             }
-            else
-            {
+                // Not a match :(
+            else {
                 mismatch(selectedCards)
             }
             gameEngine.unselectAllCards()
+            cleanupView()
+            updateUI()
         }
-        updateUI()
-
-        
     }
     
     private func cleanupView()
@@ -337,6 +331,7 @@ fileprivate extension SetCardView {
             {
                 return .regular
             }
+            
         }
         
         set {
@@ -358,6 +353,7 @@ fileprivate extension SetCardView {
                 layer.borderWidth = bounds.width * 0.1
                 layer.borderColor = #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).cgColor
             }
+            self.setNeedsDisplay()
         }
     }
 }

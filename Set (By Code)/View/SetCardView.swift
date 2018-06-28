@@ -30,6 +30,12 @@ class SetCardView: UIView {
         didSet { setNeedsDisplay() }
     }
     
+    @IBInspectable
+    var strokeColor: UIColor = .lightGray
+    {
+        didSet { setNeedsDisplay() }
+    }
+    
     override var frame: CGRect { didSet{setNeedsDisplay()}}
     
     override func draw(_ rect: CGRect)
@@ -66,8 +72,8 @@ class SetCardView: UIView {
         isOpaque = false
     }
     
-    private func setupCard()
-    {
+    private func setupCard() {
+        
         // We want rounded corners in our card
         let cornerRadius = min(bounds.size.width, bounds.size.height) * 0.1
         
@@ -81,11 +87,12 @@ class SetCardView: UIView {
         UIColor.white.setFill()
         
         // If card is selected, draw a highlight color around it
-        cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.01
         if isSelected {
-            #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).setStroke()
+            cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.1
+            #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1).setStroke()
         }
         else {
+            cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.01
             UIColor.lightGray.setStroke()
         }
         

@@ -8,11 +8,6 @@
 
 import UIKit
 
-/*
- we want this to
- 1- display diamond , oval and squiggle 
- */
-
 @IBDesignable
 class SetCardView: UIView {
     
@@ -26,6 +21,11 @@ class SetCardView: UIView {
     
     @IBInspectable
     var isSelected: Bool = false
+    {
+        didSet { setNeedsDisplay() }
+    }
+    @IBInspectable
+    var isHinted: Bool = false
     {
         didSet { setNeedsDisplay() }
     }
@@ -74,7 +74,7 @@ class SetCardView: UIView {
     
     private func setupCard() {
         
-        // We want rounded corners in our card
+        // We want rounded corners in our card relative to the rotation of the phone
         let cornerRadius = min(bounds.size.width, bounds.size.height) * 0.1
         
         // The path that draws the card's structure
@@ -83,20 +83,27 @@ class SetCardView: UIView {
         // Add clip on the card's border
         cardPath.addClip()
         
-        // Card's background/fill color
+        // Card's background color
         UIColor.white.setFill()
         
-        // If card is selected, draw a highlight color around it
-        if isSelected {
-            cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.1
+        // sets the line width according to the rotation of the phone
+        cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.1
+        
+        
+        if isSelected
+        {
             #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1).setStroke()
         }
-        else {
+        else if isHinted
+        {
+            #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1).setStroke()
+        }
+        else
+        {
             cardPath.lineWidth = min(bounds.size.width, bounds.size.height) * 0.01
             UIColor.lightGray.setStroke()
         }
         
-        // Fill and stroke it
         cardPath.fill()
         cardPath.stroke()
     }
@@ -439,3 +446,11 @@ extension CGRect {
     }
 }
 
+extension SetCardView
+{
+    static func ==(lhs: SetCardView, rhs: SetCardView) -> Bool
+    {
+        return lhs.color == rhs.color && lhs.shading == rhs.shading && lhs.shape == rhs.shape && lhs.number == rhs.number
+        
+    }
+}

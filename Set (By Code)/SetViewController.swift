@@ -55,8 +55,38 @@ class SetViewController: UIViewController {
     
     @IBAction func didTapHint(_ sender: Any)
     {
-        //TODO:- Continue this
+        let validCards = findValidCards()
+        
+        highlightValidCardsView(from: validCards)
+        updateBoardView()
     }
+    
+    private func findValidCards() -> [Card]?
+    {
+        return gameEngine.findValidSet()
+    }
+    
+    private func highlightValidCardsView(from cards: [Card]?)
+    {
+        if let validCardViews = cards?.compactMap({getCardView(for: $0)})
+        {
+            for cardView in cardViews
+            {
+                for validCardView in validCardViews
+                {
+                    if cardView == validCardView
+                    {
+                        cardView.isHinted = true
+                        cardView.cardState = .hinted
+                    }
+                }
+            }
+        }
+        
+        cardViews.forEach{print($0.cardState)}
+        cardViews.forEach({print($0.isHinted)})
+    }
+    
     
     private func startNewGame()
     {
@@ -74,7 +104,6 @@ class SetViewController: UIViewController {
         
         updateBoardView()
         
-//        view.setNeedsDisplay()
     }
     
     private func updateScoreLabel()
@@ -215,8 +244,10 @@ class SetViewController: UIViewController {
         
         // Toggle card selection
         cardView.isSelected = !cardView.isSelected
-        
         gameEngine.selectCard(at: cardViews.index(of: cardView)!)
+        
+        print("current selected state of this card:-")
+        print(cardView.cardState)
         // Process the board
         processBoard()
     }
@@ -224,7 +255,7 @@ class SetViewController: UIViewController {
     private func processBoard() {
         
         // Cleanup the board (i.e. remove any matched cards or de-highlight unmatched ones)
-//        cleanupView()
+        cleanupView()
         
         // If there are three selected cards on the board, see if they match or not
         if selectedCards.count == 3 {
@@ -232,16 +263,13 @@ class SetViewController: UIViewController {
             // Check if selected cards are a set
             let isSet = gameEngine.isSetValid(cards: selectedCards)
             
-            // Match!
             if isSet {
                 match(selectedCards)
             }
-                // Not a match :(
             else {
                 mismatch(selectedCards)
             }
             gameEngine.unselectAllCards()
-            cleanupView()
             updateUI()
         }
     }
@@ -267,11 +295,16 @@ class SetViewController: UIViewController {
     ///    - Set it into a "matched" state (i.e. green/success highlight color).
     ///
     private func match(_ cards: [Card]) {
-        for i in cards.indices {
-            let cardView = cardViews[i]
-            cardView.isSelected = false
-            cardView.cardState = .matched
-        
+        for card in cards
+        {
+            for cardView in cardViews
+            {
+                if cardView == getCardView(for: card)
+                {
+                    cardView.isSelected = false
+                    cardView.cardState = .matched
+                }
+            }
         }
     }
     
@@ -281,11 +314,16 @@ class SetViewController: UIViewController {
     ///    - Set it into a "mismatched" state (i.e. red/failure highlight color).
     ///
     private func mismatch(_ cards: [Card]) {
-        for index in cards.indices {
-            let cardView = cardViews[index]
-            cardView.isSelected = false
-            cardView.cardState = .mismatched
-        
+        for card in cards
+        {
+            for cardView in cardViews
+            {
+                if cardView == getCardView(for: card)
+                {
+                    cardView.isSelected = false
+                    cardView.cardState = .mismatched
+                }
+            }
         }
     }
 }
@@ -303,6 +341,7 @@ fileprivate extension SetCardView {
         case matched
         case mismatched
         case selected
+        case hinted
     }
     
     ///
@@ -310,23 +349,24 @@ fileprivate extension SetCardView {
     ///
     var cardState: CardState {
         
-        get {
-            // Mismatch
+        get
+        {
             if layer.borderColor == #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1).cgColor
             {
                 return .mismatched
             }
-                // Match
             else if layer.borderColor == #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1).cgColor
             {
                 return .matched
             }
-                // Selected
-            else if layer.borderColor == #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).cgColor
+            else if layer.borderColor == #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1).cgColor
             {
                 return .selected
             }
-                // Regular
+            else if layer.borderColor == #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).cgColor
+            {
+                return .hinted
+            }
             else
             {
                 return .regular
@@ -334,8 +374,11 @@ fileprivate extension SetCardView {
             
         }
         
-        set {
-            switch newValue {
+        set
+        {
+            layer.cornerRadius = min(bounds.size.width, bounds.size.height) * 0.1
+            switch newValue
+            {
                 
             case .regular:
                 layer.borderWidth = 0.0
@@ -350,6 +393,9 @@ fileprivate extension SetCardView {
                 layer.borderColor = #colorLiteral(red: 0.7450980544, green: 0.1568627506, blue: 0.07450980693, alpha: 1).cgColor
                 
             case .selected:
+                layer.borderWidth = bounds.width * 0.1
+                layer.borderColor = #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1).cgColor
+            case .hinted:
                 layer.borderWidth = bounds.width * 0.1
                 layer.borderColor = #colorLiteral(red: 0, green: 0.5173532963, blue: 1, alpha: 1).cgColor
             }

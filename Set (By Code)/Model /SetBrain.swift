@@ -169,8 +169,7 @@ class SetBrain
         score = 0
     }
     
-    init(deal numberOfCards: Int = 9)
-    {
+    fileprivate func initGame(_ numberOfCards: Int = 12) {
         initDeckCards()
         deck.shuffle()
         
@@ -178,6 +177,17 @@ class SetBrain
         {
             drawCardToBoard()
         }
+        
+        if findValidSet() == nil
+        {
+            initGame()
+        }
+    }
+    
+    init(deal numberOfCards: Int = 12)
+    {
+        initGame(numberOfCards)
+        
     }
     
     
@@ -190,7 +200,7 @@ extension SetBrain
 {
     func findValidSet() -> [Card]?
     {
-        ///FIXME:- This is super resources-expensive, find a better algorithm
+        ///FIXME:- This is super resources-expensive, make a better algorithm
         let validBoardCards = boardCards.compactMap{($0)}
         for firstCard in 0 ..< validBoardCards.count
         {
